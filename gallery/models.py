@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from gallery.managers import PictureManager
+
 
 # Create your models here.
 class Picture(models.Model):
@@ -31,3 +33,4 @@ class Picture(models.Model):
         related_name="favorite_pictures",
         blank=True
     )
+    object = PictureManager()
