@@ -4,8 +4,8 @@ from django.db import models
 
 # Create your models here.
 class Picture(models.Model):
-    picture = models.ImageField(
-        verbose_name="Picture",
+    image = models.ImageField(
+        verbose_name="Image",
         null=False,
         blank=False
     )
