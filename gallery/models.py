@@ -33,4 +33,4 @@ class Picture(models.Model):
         related_name="favorite_pictures",
         blank=True
     )
-    object = PictureManager()
+    objects = PictureManager()
