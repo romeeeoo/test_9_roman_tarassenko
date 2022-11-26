@@ -1,0 +1,6 @@
+__pycache__
+.idia
+venv
+*.sqlite3
+uploads
+
