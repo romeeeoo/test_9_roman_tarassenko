@@ -41,15 +41,7 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         favorite_pictures = self.object.favorite_pictures.all()
-        print(favorite_pictures)
         kwargs["favorite_pictures"] = favorite_pictures
         return super().get_context_data(**kwargs)
-
-    # def post(self, request, *args, **kwargs):
-    #     account_id = request.POST.get("cust_id")
-    #     account = Account.objects.get(pk=account_id)
-    #     user = request.user
-    #     account.subscriptions.add(user)
-    #     return redirect('index')
 
 

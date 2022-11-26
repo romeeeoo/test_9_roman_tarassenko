@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -28,7 +28,7 @@ class PictureDetailView(DetailView):
         return super().get_context_data(**context)
 
 
-class PictureAddView(CreateView):
+class PictureAddView(LoginRequiredMixin, CreateView):
     template_name = "picture/add.html"
     model = Picture
     form_class = PictureForm
@@ -43,7 +43,7 @@ class PictureAddView(CreateView):
             return redirect('index')
 
 
-class UpdatePictureView(UpdateView):
+class UpdatePictureView(UserPassesTestMixin, UpdateView):
     model = Picture
     template_name = "picture/update.html"
     form_class = PictureForm
@@ -51,10 +51,16 @@ class UpdatePictureView(UpdateView):
     def get_success_url(self):
         return reverse("index")
 
+    def test_func(self):
+        return self.get_object().author == self.request.user or self.request.user.has_perm('gallery.change_picture')
 
-class DeletePictureView(DeleteView):
+
+class DeletePictureView(UserPassesTestMixin, DeleteView):
     template_name = 'picture/delete.html'
     model = Picture
     success_url = reverse_lazy('index')
+
+    def test_func(self):
+        return self.get_object().author == self.request.user or self.request.user.has_perm('gallery.delete_picture')
 
 
